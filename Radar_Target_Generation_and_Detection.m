@@ -18,7 +18,7 @@ initialPosition = 50; % Example: 50 meters
 velocity = 30; % Example: 30 m/s (constant velocity)
 
 % 2:
-%% FMCW Waveform Generation
+% FMCW Waveform Generation
 %Design the FMCW waveform by giving the specs of each of its parameters.
 % Calculate the Bandwidth (B), Chirp Time (Tchirp) and Slope (slope) of the FMCW
 % chirp using the requirements above.
@@ -77,7 +77,7 @@ for i=1:length(t)
     Mix(i) = Tx(i) .* Rx(i);    
 end
 
-%% RANGE MEASUREMENT
+% RANGE MEASUREMENT
 % 4:
 %reshape the vector into Nr*Nd array. Nr and Nd here would also define the size of Range and Doppler FFT respectively.
 Mix = reshape(Mix, [Nr, Nd]);
@@ -110,7 +110,7 @@ subplot(2,1,1)
 plot(sig_fft1); 
 axis ([0 200 0 1]);
 
-%% RANGE DOPPLER RESPONSE
+% RANGE DOPPLER RESPONSE
 % The 2D FFT implementation is already provided here. This will run a 2DFFT  on the mixed signal (beat signal) output and generate a range doppler map.You will implement CFAR on the generated RDM
 
 % Range Doppler Map Generation.
@@ -133,7 +133,7 @@ doppler_axis = linspace(-100,100,Nd);
 range_axis = linspace(-200,200,Nr/2)*((Nr/2)/400);
 figure,surf(doppler_axis,range_axis,RDM);
 
-%% CFAR implementation
+% CFAR implementation
 %Slide Window through the complete Range Doppler Map
 % 9:
 %Select the number of Training Cells in both the dimensions.
