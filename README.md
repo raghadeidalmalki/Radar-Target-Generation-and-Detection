@@ -41,4 +41,4 @@ FMCW transmit and received signals are defined using wave equations, where
 The received signal is the time delayed version of the Transmit Signal which is defined by (t−τ), where τ represents the delay time, which in radar processing is the trip time for the signal.
 Replacing t with (t−τ) gives the Receive Signal:
 
-<img width="200" alt="image" src="https://github.com/user-attachments/assets/a0d9d233-a229-41df-9d6b-85b33b74727c">
+<img width="240" alt="image" src="https://github.com/user-attachments/assets/a0d9d233-a229-41df-9d6b-85b33b74727c">
