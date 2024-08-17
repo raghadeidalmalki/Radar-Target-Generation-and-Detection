@@ -226,7 +226,7 @@ for i = Tr+Gr+1:(Nr/2)-(Gr+Tr)
 end
 ```
 
-The CFAR result:
+The CFAR Result:
 
 <img width="436" alt="image" src="https://github.com/user-attachments/assets/e06ab0f8-3a57-4ac4-8201-f770544712b0">
 
