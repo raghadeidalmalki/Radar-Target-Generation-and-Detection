@@ -126,3 +126,13 @@ for i=1:length(t)
 end
 ```
 ### 3. FFT Operation 
+
+The 1D FFT implementation on the mixed/beat signal, outputting a peak at the range of the vehicle:
+<img width="350" alt="image" src="https://github.com/user-attachments/assets/22687459-6ab9-40b1-ae48-f7e8f255f95d">
+
+The 2nd FFT implementation on the mixed/beat signal generate a Range Doppler Map (RDM) as seen in the image below where we can extract both range and doppler information from.
+
+<img width="382" alt="image" src="https://github.com/user-attachments/assets/3e5e1500-ffd8-4291-9442-d722d1d29d65">
+
+
+
