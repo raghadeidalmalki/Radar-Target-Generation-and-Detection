@@ -43,7 +43,7 @@ Replacing t with (t−τ) gives the Receive Signal:
 
 <img width="240" alt="image" src="https://github.com/user-attachments/assets/a0d9d233-a229-41df-9d6b-85b33b74727c">
 
-```
+```ruby
 % FMCW Waveform Generation
 B = c / (2 * rangeResolution); % Bandwidth
 Tchirp = 5.5 * (2 * maxRange / c); % Chirp time (factor of 5.5 is typical)
