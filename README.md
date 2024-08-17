@@ -11,5 +11,15 @@
 - Perform Range FFT on the received signal to determine the Range
 - Towards the end, perform the CFAR processing on the output of 2nd FFT to display the target.
 
+### 1. RADAR System requirements
+![image](https://github.com/user-attachments/assets/48662d5c-d640-40a9-9ec8-acbaa8c2977d)
 
-### 1. System requirements
+
+'''
+% Radar Specifications
+frequency = 77e9; % Frequency of operation = 77GHz
+maxRange = 200; 
+rangeResolution = 1;
+maxVelocity = 100; 
+
+'''
