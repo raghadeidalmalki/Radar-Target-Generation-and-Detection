@@ -2,14 +2,6 @@
 clear all
 clc;
 
-%% Radar Specifications 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Frequency of operation = 77GHz
-% Max Range = 200m
-% Range Resolution = 1 m
-% Max Velocity = 100 m/s
-
-
 % Radar Specifications
 frequency = 77e9; % Frequency of operation = 77GHz
 maxRange = 200; % Max Range = 200m
