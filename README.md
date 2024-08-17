@@ -36,12 +36,14 @@ Theory :
 FMCW transmit and received signals are defined using wave equations, where 
 α = Slope  of  the  signal. The Transmit Signal is given by:
 
-<img width="190" alt="image" src="https://github.com/user-attachments/assets/2065ea4d-7e81-404c-b408-e74ed92fa3e5">
+<img width="188" alt="image" src="https://github.com/user-attachments/assets/2065ea4d-7e81-404c-b408-e74ed92fa3e5">
+
 
 The received signal is the time delayed version of the Transmit Signal which is defined by (t−τ), where τ represents the delay time, which in radar processing is the trip time for the signal.
 Replacing t with (t−τ) gives the Receive Signal:
 
 <img width="240" alt="image" src="https://github.com/user-attachments/assets/a0d9d233-a229-41df-9d6b-85b33b74727c">
+
 
 On mixing these two signals, we get the beat signal, which holds the values for both range as well as doppler. By implementing the 2D FFT on this beat signal, we can extract both Range and Doppler information
 
@@ -51,6 +53,7 @@ Mixed or Beat Signal = (Tx.*Rx)
 The above operation gives:
 
 <img width="240" alt="image" src="https://github.com/user-attachments/assets/f93de931-4738-4bc4-87cd-87d86846fb0b">
+
 
 
 ```ruby
