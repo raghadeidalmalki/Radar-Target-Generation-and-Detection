@@ -15,11 +15,11 @@
 ![image](https://github.com/user-attachments/assets/48662d5c-d640-40a9-9ec8-acbaa8c2977d)
 
 
-'''
+```
 % Radar Specifications
 frequency = 77e9; % Frequency of operation = 77GHz
 maxRange = 200; 
 rangeResolution = 1;
 maxVelocity = 100; 
 
-'''
+```
