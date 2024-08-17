@@ -128,11 +128,109 @@ end
 ### 3. FFT Operation 
 
 The 1D FFT implementation on the mixed/beat signal, outputting a peak at the range of the vehicle:
+
 <img width="350" alt="image" src="https://github.com/user-attachments/assets/22687459-6ab9-40b1-ae48-f7e8f255f95d">
 
 The 2nd FFT implementation on the mixed/beat signal generate a Range Doppler Map (RDM) as seen in the image below where we can extract both range and doppler information from.
 
-<img width="382" alt="image" src="https://github.com/user-attachments/assets/3e5e1500-ffd8-4291-9442-d722d1d29d65">
+<img width="381" alt="image" src="https://github.com/user-attachments/assets/e2280d9f-98dd-4f5a-8135-05f60b918a25">
+
+
+### 4. 2d CFAR 
+
+CFAR implementation:
+```
+
+%Slide Window through the complete Range Doppler Map
+
+Tr = 10; % Training cells for range
+Td = 8; % Training cells for doppler
+
+% Number of Guard Cells in both dimensions around the Cell under test (CUT) for accurate estimation
+Gr = 4; % Guard cells for range
+Gd = 4; % Guard cells for doppler
+```
+
+The for loop bellow evaluates each cell in the Range-Doppler Map (RDM) to determine whether it represents a target or just noise. By performing CFAR target detection across the entire Range-Doppler Map, excluding the edges. For each cell (CUT), it calculates a noise-based threshold from surrounding cells, then compares the CUT's signal level against this threshold to decide whether the CUT corresponds to a target or just noise. The result is stored in a new matrix `(thresholded_RDM)`, which indicates where targets are detected.
+
+Steps Involved:
+1. Initialization:
+
+   `thresholded_RDM = zeros(size(RDM));`
+A matrix of zeros with the same size as the RDM is initialized to store the results. After processing, this matrix will contain `1` where a target is detected and `0` where there is no target.
+
+2. Looping Through the RDM:
+
+- Outer Loop `(for i = Tr+Gr+1:(Nr/2)-(Gr+Tr))`:
+This loop iterates over the range dimension of the RDM, excluding the edges. The edges are excluded because the cells at the edges don't have enough surrounding cells to calculate the noise level accurately.
+
+- Inner Loop `(for j = Td+Gd+1:Nd-(Gd+Td))`:
+This loop iterates over the Doppler (velocity) dimension of the RDM, also excluding the edges.
+
+3. Calculating the Noise Level:
+
+- Summing Power in Training Cells:
+  
+`noise_level = sum(db2pow(RDM(i-(Tr+Gr):i+(Tr+Gr), j-(Td+Gd):j+(Td+Gd))), 'all');`
+
+The noise level around the CUT is estimated by summing the power of the signals in a region around it. This region includes both the training cells and the guard cells.
+
+- Subtracting Power in Guard Cells:
+  
+`noise_level = noise_level - sum(db2pow(RDM(i-Gr:i+Gr, j-Gd:j+Gd)), 'all');`
+
+The contribution from the guard cells is subtracted from the total to isolate the noise level.
+
+- Averaging the Noise Level:
+  
+`noise_level = noise_level / ((2*(Tr+Gr)+1)*(2*(Td+Gd)+1) - (2*Gr+1)*(2*Gd+1));`
+
+The noise level is averaged by dividing by the total number of training cells.
+
+4. Setting the Detection Threshold:
+
+`threshold = pow2db(noise_level) + offset;` 
+
+The noise level is converted back to dB, and an offset (in dB) is added to set the detection threshold. This threshold is what the signal at the CUT will be compared against.
+
+5. Comparing the Signal at CUT with the Threshold:
+
+- `if RDM(i,j) > threshold`
+The signal strength at the CUT is compared to the threshold.
+- Target Detection:
+`thresholded_RDM(i,j) = 1;`
+If the signal at the CUT is greater than the threshold, it is considered a target, and the corresponding cell in the `thresholded_RDM` is set to `1`.
+- No Detection:
+`thresholded_RDM(i,j) = 0;`
+If the signal is not greater than the threshold, the cell is set to `0`.
+
+```ruby
+% Loop through the RDM, excluding the edges for Training and Guard Cells
+for i = Tr+Gr+1:(Nr/2)-(Gr+Tr)
+    for j = Td+Gd+1:Nd-(Gd+Td)
+        % Compute noise level
+        noise_level = sum(db2pow(RDM(i-(Tr+Gr):i+(Tr+Gr), j-(Td+Gd):j+(Td+Gd))), 'all');
+        noise_level = noise_level - sum(db2pow(RDM(i-Gr:i+Gr, j-Gd:j+Gd)), 'all');
+        noise_level = noise_level / ((2*(Tr+Gr)+1)*(2*(Td+Gd)+1) - (2*Gr+1)*(2*Gd+1));
+
+        % Convert noise level to dB and add offset
+        threshold = pow2db(noise_level) + offset;
+
+        % Compare the signal under CUT with the threshold
+        if RDM(i,j) > threshold
+            thresholded_RDM(i,j) = 1;
+        else
+            thresholded_RDM(i,j) = 0;
+        end
+    end
+end
+```
+
+The CFAR result:
+
+<img width="436" alt="image" src="https://github.com/user-attachments/assets/e06ab0f8-3a57-4ac4-8201-f770544712b0">
+
+
 
 
 
